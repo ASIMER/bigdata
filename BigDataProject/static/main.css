@@ -1,0 +1,116 @@
+.fullscreen-bg {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+.fullscreen-bg__video {
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.fullscreen-bg__video_mobile {
+    display: none;
+}
+
+.store_bg_overlay {
+    width: 1850px;
+    height: 450px;
+    z-index: 800;
+    position: absolute;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.gradient_width {
+    width: 200px;
+    height: 100%;
+    pointer-events: none;
+}
+
+.gradient_left {
+    position: absolute;
+    left: 0;
+    background: -webkit-gradient(linear, right top, left top, color-stop(0%, rgba( 0,0,0,0 ) ), color-stop(100%, rgba(0,0,0,1) ) );
+}
+
+.gradient_right {
+    position: absolute;
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba( 0,0,0, 0 ) ), color-stop(100%, rgba(0,0,0,1) ) );
+    right: 0;
+}
+
+body {
+    background: linear-gradient(to top, #1b2838, #1b2939, #1a293a);
+}
+
+.spotlight_content {
+    background-image: url('images/background_spotlight.jpg');
+    margin: 0px;
+    min-height: 23px;
+}
+.store_capsule .discount_block {
+    margin: 0;
+    text-align: right;
+    padding: 5px;
+    line-height: 17px;
+    min-height: 17px;
+    font-size: 12px;
+}
+.discount_block_inline {
+    line-height: 15px;
+}
+.discount_block {
+    position: relative;
+}
+
+.store_capsule .discount_block.no_discount .discount_final_price {
+    padding: 0 6px;
+}
+.store_capsule .discount_block .discount_final_price {
+    color: #acdbf5;
+}
+.discount_block.no_discount .discount_final_price {
+}
+.discount_block_inline.no_discount .discount_final_price {
+    padding-left: 0;
+}
+.discount_block .discount_final_price {
+    color: #acdbf5;
+}
+.discount_block_inline .discount_final_price {
+    padding-left: 4px;
+    font-size: 11px;
+}
+.discount_block_inline .discount_original_price, .discount_block_inline .discount_final_price {
+    display: inline;
+}
+.discount_final_price {
+    color: #acdbf5;
+    font-size: 13px;
+}
+.discount_original_price, .discount_final_price {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+}
+.discount_block .discount_prices {
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: right;
+}
+.store_capsule .discount_block {
+    margin: 0;
+    text-align: right;
+    padding: 5px;
+    line-height: 17px;
+    min-height: 17px;
+    font-size: 12px;
+}
+.discount_block_inline {
+    line-height: 15px;
+}
+.arrow{
+    background-image: url('images/arrows.png');
+    width: 23px;
+    height: 36px;
+}
