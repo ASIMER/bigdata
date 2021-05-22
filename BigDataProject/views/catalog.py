@@ -44,7 +44,8 @@ def game_page(name, game_id) -> render_template:
     headers = {'x-functions-key': app.config['DB_API_KEY']}
     params = {'gameName': name}
     print("headers", headers)
-    print("params", headers)
+    print("params", params)
+    print("GET_PRICE_OF_SPECIFIC_GAME", app.config['GET_PRICE_OF_SPECIFIC_GAME'])
     response = get(app.config['GET_PRICE_OF_SPECIFIC_GAME'],
                    headers=headers,
                    params=params)
