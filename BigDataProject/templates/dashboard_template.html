@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<head>
+    {% block meta %}
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>>
+        <link href="{{ url_for('catalog.static', filename='main.css') }}" media="screen" rel="stylesheet" type="text/css" />
+        <link rel="apple-touch-icon" sizes="76x76"
+              href="{{ url_for('catalog.static', filename='images/apple-icon.png') }}">
+        <link rel="icon" type="image/png"
+              href="{{ url_for('catalog.static', filename='images/favicon.ico') }}">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+              name='viewport'/>
+        <!--     Fonts and icons     -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+              rel="stylesheet"/>
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+        <!-- CSS Files -->
+        <link href="{{ url_for('catalog.static', filename='css/bootstrap.min.css') }}"
+              rel="stylesheet"/>
+        <link href="{{ url_for('catalog.static',
+            filename='css/light-bootstrap-dashboard.css', v='2.0.0') }}"
+              rel="stylesheet"/>
+        <!-- CSS Just for demo purpose, don't include it in your project -->
+        <link href="{{ url_for('catalog.static', filename='css/dataTables.bootstrap4.css') }}"
+              rel="stylesheet"/>
+        <link rel="stylesheet"
+              href="{{ url_for('catalog.static', filename='css/quantumalert.css') }}"/>
+        <script type="text/javascript" src="{{ url_for('catalog.static', filename='graph/canvasjs.stock.min.js') }}"></script>
+        <script type="text/javascript">
+            window.onload = function () {
+                var dataPoints = {{ data|tojson }}, currentDate = new Date(), rangeChangedTriggered = false;
+                var stockChart = new CanvasJS.StockChart("chartContainer",{
+                    theme: "dark1", //"light2", "dark1", "dark2"
+                    title:{
+                        text:"{{ game_name }}"
+                    },
+                    rangeChanged: function(e) {
+                        rangeChangedTriggered = true;
+                    },
+                    charts: [{
+                        axisX: {
+                            crosshair: {
+                                enabled: true,
+                                valueFormatString: "MMM DD, YYYY HH:mm:ss"
+                            }
+                        },
+                        axisY: {
+                            title: "Price $"
+                        },
+                        toolTip: {
+                            shared: true
+                        },
+                        data: [{
+                            type: "line",
+                            name: "Pageviews",
+                            xValueFormatString: "MMM DD, YYYY HH:mm:ss",
+                            xValueType: "dateTime",
+                            dataPoints : dataPoints
+                        }]
+                    }],
+                    navigator: {
+                        slider: {
+                            minimum: new Date(currentDate.getTime() - (90 * 1000))
+                        },
+                        axisX: {
+                            labelFontColor: "white"
+                        }
+                    },
+                    rangeSelector: {
+                        enabled: false
+                    }
+                });
+                var dataCount = {{ data|length }}, ystart = 50, interval = 99000, xstart = (currentDate.getTime() - (700 * 1000));
+                updateChart(xstart, ystart, dataCount, interval);
+                function updateChart(xstart, ystart, length, interval) {
+                    var xVal = xstart, yVal = ystart;
+
+                    if(!rangeChangedTriggered) {
+                        stockChart.options.navigator.slider.minimum = new Date(xVal - (90 * 1000)) ;
+                    }
+                    xstart = xVal;
+                    dataCount = 1;
+                    ystart = yVal;
+                    stockChart.render();
+                }
+            }
+        </script>
+    {% endblock %}
+    <title>Light Bootstrap Dashboard - Free Bootstrap 4 Admin Dashboard by
+        Creative Tim</title>
+</head>
+
+<body>
+<div id="dark-mode"></div>
+<div id="loader"></div>
+<div class="wrapper">
+
+    <div class="">
+        {% block navbar %}
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    {% block navbar_brand %}
+                        <a class="navbar-brand"
+                           href="{{ url_for('catalog.main') }}"> Catalog </a>
+                    {% endblock %}
+                </div>
+            </nav>
+            <!-- End Navbar -->
+        {% endblock %}
+        {% block content %}
+            <!-- Place for global content -->
+        {% endblock %}
+        {% block footer %}
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav>
+                        <ul class="footer-menu">
+                            <li>
+                                <a href="#">
+                                    Big Data project
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-center">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                        </p>
+                    </nav>
+                </div>
+            </footer>
+        {% endblock %}
+    </div>
+
+</div>
+
+</body>
+{% block scripts %}
+
+    <!--   Core JS Files   -->
+    <script src="{{ url_for('catalog.static', filename='js/core/jquery.3.2.1.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ url_for('catalog.static', filename='js/core/popper.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ url_for('catalog.static', filename='js/core/bootstrap.min.js') }}"
+            type="text/javascript"></script>
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="{{ url_for('catalog.static', filename='js/plugins/bootstrap-switch.js') }}"></script>
+    <!--  Google Maps Plugin    -->
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!--  Chartist Plugin  -->
+    <script src="{{ url_for('catalog.static', filename='js/plugins/chartist.min.js') }}"></script>
+    <!--  Notifications Plugin    -->
+    <script src="{{ url_for('catalog.static', filename='js/plugins/bootstrap-notify.js') }}"></script>
+    <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+    <script src="{{ url_for('catalog.static', filename='js/light-bootstrap-dashboard.js', v='2.0.0') }}"
+            type="text/javascript"></script>
+    <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+    <script src="{{ url_for('catalog.static', filename='js/quantumalert.js') }}"></script>
+
+{% endblock %}
+</html>

@@ -2,9 +2,9 @@ import json
 from os import fspath, getcwd, walk
 
 
-def load_copy():
+def load_copy(fname):
     # open output file for reading
-    with open(fspath('BigDataProject/db_local_copy/db_local_data.txt'), 'r') as filehandle:
+    with open(fspath(fname), 'r') as filehandle:
         dataList = json.load(filehandle)
 
     return dataList
