@@ -92,7 +92,7 @@
         card = $("#game_card").clone()
         console.log(card.find("#card_img"))
         card.find("#card_img").attr("src", "https://cdn.cloudflare.steamstatic.com/steam/apps/" + data['appId'] + "/header.jpg")
-        card.find("#card_title").attr("href", "http://127.0.0.1:5000/game_page/" + encodeURI(data['name']) + "/" + data['appId'])
+        card.find("#card_title").attr("href", "/game_page/" + encodeURI(data['name']) + "/" + data['appId'])
         card.find("#card_title").html(data['name'])
         if (data["priceHistory"][data["priceHistory"].length - 1]["discountOnPrice"] != 0) {
             card.find("#card_price").html("<s>" + data['priceHistory'][data["priceHistory"].length - 1]['initialPrice'] + "</s>" + data['priceHistory'][data["priceHistory"].length - 1]['finalPrice'])
@@ -107,7 +107,7 @@
         $('#load_more').click(function () {
 
             $.ajax({
-                url: "http://127.0.0.1:5000/load_games",
+                url: "/load_games",
                 dataType: "json",
                 data: {"pagingState": next_page},
                 type: "GET",
