@@ -1,5 +1,5 @@
 aniso8601==9.0.1
--e git+https://github.com/ASIMER/bigdata.git@c8d052149f75d30c812045af5a767a076bb2ec51#egg=BigDataProject
+-e git+https://github.com/ASIMER/bigdata.git@9ca0eadee730aa305bc951175d59bb5b5ea3c6b5#egg=BigDataProject
 certifi==2020.12.5
 chardet==4.0.0
 click==8.0.0
