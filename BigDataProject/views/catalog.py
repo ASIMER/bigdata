@@ -43,10 +43,14 @@ def game_page(name, game_id) -> render_template:
     """
     headers = {'x-functions-key': app.config['DB_API_KEY']}
     params = {'gameName': name}
+    print("headers", headers)
+    print("params", headers)
     response = get(app.config['GET_PRICE_OF_SPECIFIC_GAME'],
                    headers=headers,
-                   params=params).json()
-
+                   params=params)
+    print("response", response)
+    response = response.json()
+    print("response", response)
     converted_data = [
             {"x": datetime.fromisoformat(record['datePrice']).timestamp() * 1000,
              "y": record['finalPrice']
