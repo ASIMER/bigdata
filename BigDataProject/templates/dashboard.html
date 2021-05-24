@@ -66,6 +66,14 @@
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-12 pb-4" id="comment_list">
                     <h1 class="text-light">Comments</h1>
+                    <div class="comment mt-4 bg-dark text-justify float-left" hidden id="comment_card">
+                        <h4 class="text-light" id="comment_card_nickname"></h4>
+                        <span id="comment_card_datetime"></span>
+                        <button id="comment_card_emotion" type="button" class="btn text-light text-up" style="line-height: 0px; height: 15px;"></button>
+                        <br>
+                        <p id="comment_card_text" class=" mt-1" style="min-height: 100px; min-width: 400px;"></p>
+                    </div>
+                    <!--
                     {% for comment in comments %}
                     <div class="comment mt-4 bg-dark text-justify float-left" id="comment_card">
                         <h4 class="text-light" id="comment_card_nickname">{{ comment['nickname'] }}</h4>
@@ -75,6 +83,7 @@
                         <p id="comment_card_text" class=" mt-1" style="min-height: 100px; min-width: 400px;">{{ comment['containment'] }}</p>
                     </div>
                     {% endfor %}
+                    -->
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
                     <form id="algin-form" class="bg-dark">
@@ -100,6 +109,7 @@
     <script type="text/javascript">
     let emotions = {{ emotion_color|tojson }}
         function create_comment(data) {
+            console.log(data)
             let currentdate = new Date();
             let datetime = currentdate.getFullYear() + "-"
                 + (currentdate.getMonth()+1)  + "-"
@@ -109,7 +119,7 @@
                 + currentdate.getSeconds();
 
             card = $("#comment_card").clone()
-
+            card.removeAttr('hidden')
             card.find("#comment_card_nickname").html(data['nickname'])
             card.find("#comment_card_datetime").html("- " + datetime)
             card.find("#comment_card_emotion").attr("style", "line-height: 0px; height: 15px; background-color: " +  emotions[data['user_reaction']])
