@@ -52,3 +52,27 @@ class SendComment(Resource):
                            json=data)
             response = response.json()
         return response, 200
+
+
+class SearchGames(Resource):
+    """
+    RESTFull
+    """
+    def get(self):
+        """
+        READ operation with DB for Employee table
+
+        :return: employee list, 200 status code
+        """
+        game_name = request.args.get('gameName')
+        if app.config['DB_LOCAL_COPY']:
+            response = load_copy("BigDataProject/db_local_copy/db_local_data_game_info.txt")
+        else:
+            headers = {'x-functions-key': app.config['DB_API_KEY']}
+            params = {'gameName': game_name}
+
+            response = get(app.config['GET_GAME_INFO'],
+                           headers=headers,
+                           params=params).json()
+
+        return response, 200

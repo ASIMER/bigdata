@@ -12,6 +12,41 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-light">Big Data Project</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link text-light">Catalog page <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search_text">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="search">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="col-6 col-md-6 col-lg-4 mb-3 " hidden id="game_card">
+    <div class="card spotlight_content h-100 border-0">
+        <div class="card-img-top">
+            <img src="" id= "card_img" class="img-fluid
+                                mx-auto
+                                d-block" alt="Card image cap">
+        </div>
+        <div class="text-center discount_block discount_prices">
+            <h4 class="card-title">
+                <a href="" id= "card_title" class=" font-weight-bold text-light text-uppercase small"></a>
+            </h4>
+            <h5 class="fs-5 card-price fw-bold discount_final_price">
+                    <i id= "card_price"></i>
+            </h5>
+        </div>
+    </div>
+</div>
 <div class="container pt-5">
     <div class="row">
         <div class="col-md-8 order-md-2 col-lg-9">
@@ -90,6 +125,7 @@
 <script type="text/javascript">
     function create_card(data) {
         card = $("#game_card").clone()
+        card.removeAttr("hidden")
         console.log(card.find("#card_img"))
         card.find("#card_img").attr("src", "https://cdn.cloudflare.steamstatic.com/steam/apps/" + data['appId'] + "/header.jpg")
         card.find("#card_title").attr("href", "/game_page/" + encodeURI(data['name']) + "/" + data['appId'])
@@ -119,6 +155,10 @@
 
                 }
             })
+        })
+        $('#search').click(function () {
+            window.location.replace("{{ url_for }}");
+
         })
     })
 </script>
