@@ -168,8 +168,7 @@
             })
         })
         $('#search').click(function () {
-            window.location.replace("{{ url_for }}");
-
+            window.open(encodeURIComponent("/game_page/" + $("#search_text").val()));
         })
     })
 </script>

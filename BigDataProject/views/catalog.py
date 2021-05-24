@@ -33,8 +33,8 @@ def main() -> render_template:
     return render_template("main.html", games=games, next_page=pagingState)
 
 
-@cart_routes.route('/game_page/<name>/<game_id>', methods=['GET'])
-def game_page(name, game_id) -> render_template:
+@cart_routes.route('/game_page/<name>', methods=['GET'])
+def game_page(name, game_id = None) -> render_template:
     """
     main catalog page
 
@@ -54,17 +54,17 @@ def game_page(name, game_id) -> render_template:
         comments = load_copy("BigDataProject/db_local_copy/db_local_data_game_comments.txt")['comments']
     else:
         headers = {'x-functions-key': app.config['DB_API_KEY']}
-        comment_headers = {'x-functions-key': app.config['DB_API_KEY_COMMENTS']}
-        params = {'id': game_id}
-        comment_params = {'game_id': game_id}
-
-        response = get(app.config['GET_GAME_INFO'],
+        params = {'name': name}
+        response = get(app.config['GET_GAME_BY_NAME'],
                        headers=headers,
                        params=params).json()
+
+        comment_headers = {'x-functions-key': app.config['DB_API_KEY_COMMENTS']}
+        comment_params = {'game_id': response['appId']}
         comments = get(app.config['GET_GAME_COMMENTS'],
                        headers=comment_headers,
                        params=comment_params).json()['comments']
-        print(comments)
+
     converted_data = [
             {"x": datetime.fromisoformat(record['datePrice']).timestamp() * 1000,
              "y": record['finalPrice']

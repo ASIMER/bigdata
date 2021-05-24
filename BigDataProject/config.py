@@ -12,3 +12,4 @@ class Config:
         self.DB_LOCAL_COPY = os.environ.get("DB_LOCAL_COPY") == "True"
         self.RECORD_COMMENT = os.environ.get("RECORD_COMMENT")
         self.GET_GAME_COMMENTS = os.environ.get("GET_GAME_COMMENTS")
+        self.GET_GAME_BY_NAME = os.environ.get("GET_GAME_BY_NAME")
