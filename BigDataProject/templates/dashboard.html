@@ -156,7 +156,7 @@
                     url: "/send_comment",
                     dataType: "json",
                     data: {
-                        "app_id": {{ game_id }},
+                        "app_id": {{ game_info['appId'] }},
                         "nickname": $('#fullname').val(),
                         "comment": $('#message').val()
                     },
