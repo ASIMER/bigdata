@@ -62,7 +62,7 @@
                             </div>
                             <div class="text-center discount_block discount_prices">
                                 <h4 class="card-title">
-                                    <a href="{{ url_for('catalog.game_page', name=game['name'], game_id=game['appId']) }}" id= "card_title" class=" font-weight-bold text-light text-uppercase small">{{ game['name'] }}</a>
+                                    <a href="{{ url_for('catalog.game_page', name=game['name']) }}" id= "card_title" class=" font-weight-bold text-light text-uppercase small">{{ game['name'] }}</a>
                                 </h4>
                                 <h5 class="fs-5 card-price fw-bold discount_final_price">
                                     {% if game['priceHistory'][game['priceHistory']|length - 1]['discountOnPrice'] %}
@@ -138,7 +138,7 @@
         card.removeAttr("hidden")
         console.log(card.find("#card_img"))
         card.find("#card_img").attr("src", "https://cdn.cloudflare.steamstatic.com/steam/apps/" + data['appId'] + "/header.jpg")
-        card.find("#card_title").attr("href", "/game_page/" + encodeURI(data['name']) + "/" + data['appId'])
+        card.find("#card_title").attr("href", "/game_page/" + encodeURI(data['name']))
         card.find("#card_title").html(data['name'])
         if (data["priceHistory"][data["priceHistory"].length - 1]["discountOnPrice"] != 0) {
             card.find("#card_price").html("<s>" + data['priceHistory'][data["priceHistory"].length - 1]['initialPrice'] + "</s>" + data['priceHistory'][data["priceHistory"].length - 1]['finalPrice'])
