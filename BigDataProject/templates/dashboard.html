@@ -148,6 +148,8 @@
                 card.find("#comment_card_text").html(data['comment'])
 
                 card.appendTo("#comment_list")
+                $('#fullname').val("")
+                $('#message').val("")
             }
         $(document).ready(function () {
             $('#post').click(function () {
