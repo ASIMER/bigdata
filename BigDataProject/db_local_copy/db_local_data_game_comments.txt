@@ -1,0 +1,12 @@
+{
+    "comments": [
+        {
+            "id": "8f4bd8fa-cd04-4093-9415-3ab63649d1fe",
+            "app_id": 3920,
+            "nickname": "jholxpert",
+            "date_time": "2021-05-22 19:56:09.093000",
+            "containment": "I'm so dissatisfied with this game!",
+            "reaction": "anger"
+        }
+    ]
+}

@@ -30,7 +30,6 @@ def main() -> render_template:
                            headers=headers).json()
             pagingState = response['pagingState']
             games += response['page']
-    print(pagingState)
     return render_template("main.html", games=games, next_page=pagingState)
 
 
@@ -41,20 +40,41 @@ def game_page(name, game_id) -> render_template:
 
     :return:
     """
-    headers = {'x-functions-key': app.config['DB_API_KEY']}
-    params = {'gameName': name}
-    response = get(app.config['GET_PRICE_OF_SPECIFIC_GAME'],
-                   headers=headers,
-                   params=params)
-    response = response.json()
+    emotion_color = {
+            "anger": "#DA6663",
+            "fear": "#DA996B",
+            "joy": "#BFB760",
+            "love": "#ff75a7",
+            "sadness": "#DA99B2",
+            "surprise": "#5FBDDA",
+            }
+    print(app.config['DB_LOCAL_COPY'])
+    if app.config['DB_LOCAL_COPY']:
+        response = load_copy("BigDataProject/db_local_copy/db_local_data_game_info.txt")
+        comments = load_copy("BigDataProject/db_local_copy/db_local_data_game_comments.txt")['comments']
+    else:
+        headers = {'x-functions-key': app.config['DB_API_KEY']}
+        comment_headers = {'x-functions-key': app.config['DB_API_KEY_COMMENTS']}
+        params = {'id': game_id}
+        comment_params = {'game_id': game_id}
+
+        response = get(app.config['GET_GAME_INFO'],
+                       headers=headers,
+                       params=params).json()
+        comments = get(app.config['GET_GAME_COMMENTS'],
+                       headers=comment_headers,
+                       params=comment_params).json()['comments']
+        print(comments)
     converted_data = [
             {"x": datetime.fromisoformat(record['datePrice']).timestamp() * 1000,
              "y": record['finalPrice']
              }
-            for record in response
+            for record in response['priceHistory']
             ]
-
     return render_template("dashboard.html",
                            data=converted_data,
+                           game_info=response,
                            game_name=name,
-                           game_id=game_id)
+                           game_id=game_id,
+                           comments=comments,
+                           emotion_color = emotion_color)

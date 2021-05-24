@@ -6,11 +6,21 @@
 <head>
     {% block meta %}
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>>
-        <link href="{{ url_for('catalog.static', filename='main.css') }}" media="screen" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>>
+        <link href="{{ url_for('catalog.static', filename='dashboard.css') }}"
+              media="screen" rel="stylesheet" type="text/css"/>
         <link rel="apple-touch-icon" sizes="76x76"
               href="{{ url_for('catalog.static', filename='images/apple-icon.png') }}">
         <link rel="icon" type="image/png"
@@ -34,16 +44,18 @@
               rel="stylesheet"/>
         <link rel="stylesheet"
               href="{{ url_for('catalog.static', filename='css/quantumalert.css') }}"/>
-        <script type="text/javascript" src="{{ url_for('catalog.static', filename='graph/canvasjs.stock.min.js') }}"></script>
+        <script type="text/javascript"
+                src="{{ url_for('catalog.static', filename='graph/canvasjs.stock.min.js') }}"></script>
         <script type="text/javascript">
             window.onload = function () {
-                var dataPoints = {{ data|tojson }}, currentDate = new Date(), rangeChangedTriggered = false;
-                var stockChart = new CanvasJS.StockChart("chartContainer",{
+                var dataPoints = {{ data|tojson }}, currentDate = new Date(),
+                    rangeChangedTriggered = false;
+                var stockChart = new CanvasJS.StockChart("chartContainer", {
                     theme: "dark1", //"light2", "dark1", "dark2"
-                    title:{
-                        text:"{{ game_name }}"
+                    title: {
+                        text: "{{ game_name }}"
                     },
-                    rangeChanged: function(e) {
+                    rangeChanged: function (e) {
                         rangeChangedTriggered = true;
                     },
                     charts: [{
@@ -61,10 +73,10 @@
                         },
                         data: [{
                             type: "line",
-                            name: "Pageviews",
+                            name: "Price",
                             xValueFormatString: "MMM DD, YYYY HH:mm:ss",
                             xValueType: "dateTime",
-                            dataPoints : dataPoints
+                            dataPoints: dataPoints
                         }]
                     }],
                     navigator: {
@@ -79,13 +91,16 @@
                         enabled: false
                     }
                 });
-                var dataCount = {{ data|length }}, ystart = 50, interval = 99000, xstart = (currentDate.getTime() - (700 * 1000));
+                var dataCount = {{ data|length }}, ystart = 50,
+                    interval = 99000,
+                    xstart = (currentDate.getTime() - (700 * 1000));
                 updateChart(xstart, ystart, dataCount, interval);
+
                 function updateChart(xstart, ystart, length, interval) {
                     var xVal = xstart, yVal = ystart;
 
-                    if(!rangeChangedTriggered) {
-                        stockChart.options.navigator.slider.minimum = new Date(xVal - (90 * 1000)) ;
+                    if (!rangeChangedTriggered) {
+                        stockChart.options.navigator.slider.minimum = new Date(xVal - (90 * 1000));
                     }
                     xstart = xVal;
                     dataCount = 1;
