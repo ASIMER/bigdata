@@ -22,7 +22,7 @@
                                     <h5 class="card-title text-white">Published
                                         on:</h5>
                                     <a href="{% if game_info['origin'] == 'Steam' %}
-                                        https://store.steampowered.com/app/{{ game_id }}
+                                        https://store.steampowered.com/app/{{ game_info['appId'] }}
                                     {% endif %}">
                                         {{ game_info['origin'] }}
                                     </a>
