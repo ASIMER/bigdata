@@ -71,8 +71,20 @@ def game_page(name, game_id) -> render_template:
              }
             for record in response['priceHistory']
             ]
+    addition_data = []
+    for i, day in enumerate(converted_data):
+        if i > 0:
+            part_day = day.copy()
+            part_day['x'] = converted_data[i-1]['x'] + ( converted_data[i]['x'] - converted_data[i-1]['x']) / 4 * 2
+            part_day['y'] = converted_data[i-1]['y'] + (converted_data[i]['y'] - converted_data[i-1]['y']) / 4 * 2
+            addition_data.append(part_day)
+            part_day = day.copy()
+            part_day['x'] = converted_data[i-1]['x'] + ( converted_data[i]['x'] - converted_data[i-1]['x']) / 4 * 3
+            part_day['y'] = converted_data[i-1]['y'] + (converted_data[i]['y'] - converted_data[i-1]['y']) / 4 * 3
+            addition_data.append(part_day)
+        addition_data.append(day)
     return render_template("dashboard.html",
-                           data=converted_data,
+                           data=addition_data,
                            game_info=response,
                            game_name=name,
                            game_id=game_id,

@@ -1,13 +1,7 @@
-import json
-
-from requests import get, post
-
-data = {
-        "app_id": "443810",
-        "nickname": "jholxpert",
-        "comment": "Yes"
-        }
-response = post("https://game-store-processing-endpoint.azurewebsites.net/api/recordcomment",
-                 headers={"x-functions-key": "FamztMfa9LYuTCrY2/PmZ9pN/NB5a8khmaeLREIIYlfBjiA9edf1oQ=="},
-                 data=json.dumps(data))
-print(response)
+data = [1, 2, 3, 4]
+new_data = []
+for i, day in enumerate(data):
+    if i > 0:
+        new_data.append((data[i-1] + data[i]) / 2)
+    new_data.append(data[i])
+print(new_data)
