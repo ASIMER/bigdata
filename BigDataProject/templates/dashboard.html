@@ -1,142 +1,166 @@
 {% extends "dashboard_template.html" %}
 {% block content %}
-    <div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col col-xl-1"></div>
-            <div class="col col-xl-1"></div>
-            <div class="col col-sm-3">
-                <div class="card text-white bg-dark ">
-                    <h4 class="card-title text-white  text-center">{{ game_name }}</h4>
-                    <div class="card-img-top">
-                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ game_id }}/header.jpg"
-                             class="img-fluid
+    <div class="content mt-5">
+            <div class="row">
+                <div class="col col-sm-2"></div>
+                <div class="col col-sm-3">
+                    <div class="card text-white bg-dark ">
+                        <h4 class="card-title text-white  text-center">{{ game_name }}</h4>
+                        <div class="card-img-top">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ game_id }}/header.jpg"
+                                 class="img-fluid
                             mx-auto
                             d-block" alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        {{ game_info['description'] }}
+                        </div>
+                        <div class="card-body">
+                            {{ game_info['description'] }}
 
-                    </div>
-                    <ul class="list-group bg-dark">
-                        <li class="list-group-item bg-dark">
-                            <div class="legend">
-                                <h5 class="card-title text-white">Published
-                                    on:</h5>
-                                <a href="{% if game_info['origin'] == 'Steam' %}
+                        </div>
+                        <ul class="list-group bg-dark">
+                            <li class="list-group-item bg-dark">
+                                <div class="legend">
+                                    <h5 class="card-title text-white">Published
+                                        on:</h5>
+                                    <a href="{% if game_info['origin'] == 'Steam' %}
                                         https://store.steampowered.com/app/{{ game_id }}
                                     {% endif %}">
-                                    {{ game_info['origin'] }}
-                                </a>
+                                        {{ game_info['origin'] }}
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-dark">
+                                <div class="legend">
+                                    <h5 class="card-title text-white">
+                                        Developers:</h5>
+                                    {% for dev in game_info['developers'] %}
+                                        <i class="fa fa-circle"></i> {{ dev }}
+                                    {% endfor %}
+                                </div>
+                            </li>
+                            <div class="card-footer">
+                                <div class="legend">
+                                    <h5 class="card-title text-white">
+                                        Genres:</h5>
+                                    {% for genre in game_info['genres'] %}
+                                        <i class="fa fa-circle"></i>
+                                        {{ genre }}
+                                    {% endfor %}
+                                </div>
+                                <hr>
+                                <div class="stats">
+                                    Release
+                                    date: {{ game_info['releaseDate'] }}
+                                </div>
                             </div>
-                        </li>
-                        <li class="list-group-item bg-dark">
-                            <div class="legend">
-                                <h5 class="card-title text-white">
-                                    Developers:</h5>
-                                {% for dev in game_info['developers'] %}
-                                    <i class="fa fa-circle"></i> {{ dev }}
-                                {% endfor %}
-                            </div>
-                        </li>
-                        <div class="card-footer">
-                            <div class="legend">
-                                <h5 class="card-title text-white">Genres:</h5>
-                                {% for genre in game_info['genres'] %}
-                                    <i class="fa fa-circle"></i> {{ genre }}
-                                {% endfor %}
-                            </div>
-                            <hr>
-                            <div class="stats">
-                                Release date: {{ game_info['releaseDate'] }}
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="col col-xl-6">
-                <div class="card bg-dark col-md-9">
-                    <div class="card-image" id="chartContainer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <section>
-    <div class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-5 col-md-6 col-12 pb-4" id="comment_list">
-                    <h1 class="text-light">Comments</h1>
-                    <div class="comment mt-4 bg-dark text-justify float-left" hidden id="comment_card">
-                        <h4 class="text-light" id="comment_card_nickname"></h4>
-                        <span id="comment_card_datetime"></span>
-                        <button id="comment_card_emotion" type="button" class="btn text-light text-up" style="line-height: 0px; height: 15px;"></button>
-                        <br>
-                        <p id="comment_card_text" class=" mt-1" style="min-height: 100px; min-width: 400px;"></p>
                     </div>
-
-                    {% for comment in comments %}
-                    <div class="comment mt-4 bg-dark text-justify float-left" id="comment_card">
-                        <h4 class="text-light" id="comment_card_nickname">{{ comment['nickname'] }}</h4>
-                        <span id="comment_card_datetime">- {{ comment['date_time'] }}</span>
-                        <button id="comment_card_emotion" type="button" class="btn text-light text-up" style="line-height: 0px; height: 15px; background-color: {{ emotion_color[comment['reaction']] }};">{{ comment['reaction'] }}</button>
-                        <br>
-                        <p id="comment_card_text" class=" mt-1" style="min-height: 100px; min-width: 400px;">{{ comment['containment'] }}</p>
-                    </div>
-                    {% endfor %}
-
                 </div>
-                <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
-                    <form id="algin-form" class="bg-dark">
-                        <div class="form-group">
-                            <h4 class="text-light">Leave a comment</h4>
-                            <label for="name">Name</label>
-                            <input type="text" name="name" id="fullname" class="form-control"> </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea name="msg" id="message" msg cols="30" rows="5" class="form-control text-light" style="background-color: black; height: 200pt"></textarea>
-                        </div>
-                        <div class="form-group" id="send_comment"><button type="button" id="post" class="btn">Post Comment</button> </div>
-                    </form>
+                <div class="col col-sm-6">
+                    <div class="card bg-dark col-md-9">
+                        <div class="card-image" id="chartContainer"
+                             style="min-height: 500px"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    </section>
+        <section>
+            <div class="container-fluid">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-6 col-12 pb-4"
+                             id="comment_list">
+                            <h1 class="text-light">Comments</h1>
+                            <div class="comment mt-4 bg-dark text-justify float-left"
+                                 hidden id="comment_card">
+                                <h4 class="text-light"
+                                    id="comment_card_nickname"></h4>
+                                <span id="comment_card_datetime"></span>
+                                <button id="comment_card_emotion" type="button"
+                                        class="btn text-light text-up"
+                                        style="line-height: 0px; height: 15px;"></button>
+                                <br>
+                                <p id="comment_card_text" class=" mt-1"
+                                   style="min-height: 100px; min-width: 400px;"></p>
+                            </div>
+
+                            {% for comment in comments %}
+                                <div class="comment mt-4 bg-dark text-justify float-left"
+                                     id="comment_card">
+                                    <h4 class="text-light"
+                                        id="comment_card_nickname">{{ comment['nickname'] }}</h4>
+                                    <span id="comment_card_datetime">- {{ comment['date_time'] }}</span>
+                                    <button id="comment_card_emotion"
+                                            type="button"
+                                            class="btn text-light text-up"
+                                            style="line-height: 0px; height: 15px; background-color: {{ emotion_color[comment['reaction']] }};">{{ comment['reaction'] }}</button>
+                                    <br>
+                                    <p id="comment_card_text" class=" mt-1"
+                                       style="min-height: 100px; min-width: 400px;">{{ comment['containment'] }}</p>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                        <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                            <form id="algin-form" class="bg-dark">
+                                <div class="form-group">
+                                    <h4 class="text-light">Leave a comment</h4>
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name"
+                                           id="fullname" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea name="msg" id="message" msg
+                                              cols="30" rows="5"
+                                              class="form-control text-light"
+                                              style="background-color: black; height: 200pt"></textarea>
+                                </div>
+                                <div class="form-group" id="send_comment">
+                                    <button type="button" id="post"
+                                            class="btn">Post Comment
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">
-    let emotions = {{ emotion_color|tojson }}
-        function create_comment(data) {
-            console.log(data)
-            let currentdate = new Date();
-            let datetime = currentdate.getFullYear() + "-"
-                + (currentdate.getMonth()+1)  + "-"
-                + currentdate.getDate() + " "
-                + currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":"
-                + currentdate.getSeconds();
+        let emotions = {{ emotion_color|tojson }}
+            function create_comment(data) {
+                console.log(data)
+                let currentdate = new Date();
+                let datetime = currentdate.getFullYear() + "-"
+                    + (currentdate.getMonth() + 1) + "-"
+                    + currentdate.getDate() + " "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
 
-            card = $("#comment_card").clone()
-            card.removeAttr('hidden')
-            card.find("#comment_card_nickname").html(data['nickname'])
-            card.find("#comment_card_datetime").html("- " + datetime)
-            card.find("#comment_card_emotion").attr("style", "line-height: 0px; height: 15px; background-color: " +  emotions[data['user_reaction']])
-            card.find("#comment_card_emotion").html(data['user_reaction'])
-            card.find("#comment_card_text").html(data['comment'])
+                card = $("#comment_card").clone()
+                card.removeAttr('hidden')
+                card.find("#comment_card_nickname").html(data['nickname'])
+                card.find("#comment_card_datetime").html("- " + datetime)
+                card.find("#comment_card_emotion").attr("style", "line-height: 0px; height: 15px; background-color: " + emotions[data['user_reaction']])
+                card.find("#comment_card_emotion").html(data['user_reaction'])
+                card.find("#comment_card_text").html(data['comment'])
 
-            card.appendTo("#comment_list")
-        }
+                card.appendTo("#comment_list")
+            }
         $(document).ready(function () {
             $('#post').click(function () {
                 console.log($('#fullname').val())
                 $.ajax({
                     url: "/send_comment",
                     dataType: "json",
-                    data: {"app_id": {{ game_id }},
+                    data: {
+                        "app_id": {{ game_id }},
                         "nickname": $('#fullname').val(),
-                        "comment": $('#message').val()},
+                        "comment": $('#message').val()
+                    },
                     type: "POST",
                     success: function (response) {
                         create_comment(response)

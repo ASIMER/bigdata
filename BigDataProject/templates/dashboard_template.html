@@ -53,7 +53,7 @@
                 var stockChart = new CanvasJS.StockChart("chartContainer", {
                     theme: "dark1", //"light2", "dark1", "dark2"
                     title: {
-                        text: "{{ game_name }}"
+                        text: "Price history end prediction"
                     },
                     rangeChanged: function (e) {
                         rangeChangedTriggered = true;
@@ -110,55 +110,43 @@
             }
         </script>
     {% endblock %}
-    <title>Light Bootstrap Dashboard - Free Bootstrap 4 Admin Dashboard by
-        Creative Tim</title>
+    <title>Big Data project - game page</title>
 </head>
-
 <body>
-<div id="dark-mode"></div>
-<div id="loader"></div>
-<div class="wrapper">
-
-    <div class="">
-        {% block navbar %}
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-                <div class="container-fluid">
-                    {% block navbar_brand %}
-                        <a class="navbar-brand"
-                           href="{{ url_for('catalog.main') }}"> Catalog </a>
-                    {% endblock %}
-                </div>
+{% block navbar %}
+    <!-- Navbar -->
+    <nav class="navbar bg-dark navbar-expand-lg b-1">
+        {% block navbar_brand %}
+            <a class="navbar-brand text-light"
+               href="{{ url_for('catalog.main') }}"> Catalog </a>
+        {% endblock %}
+    </nav>
+    <!-- End Navbar -->
+{% endblock %}
+{% block content %}
+    <!-- Place for global content -->
+{% endblock %}
+{% block footer %}
+    <footer class="footer bg-dark mt-2">
+        <div class="container-fluid">
+            <nav>
+                <ul class="footer-menu">
+                    <li>
+                        <a href="#">
+                            Big Data project
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-center">
+                    ©
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                </p>
             </nav>
-            <!-- End Navbar -->
-        {% endblock %}
-        {% block content %}
-            <!-- Place for global content -->
-        {% endblock %}
-        {% block footer %}
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav>
-                        <ul class="footer-menu">
-                            <li>
-                                <a href="#">
-                                    Big Data project
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="copyright text-center">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                        </p>
-                    </nav>
-                </div>
-            </footer>
-        {% endblock %}
-    </div>
-
-</div>
+        </div>
+    </footer>
+{% endblock %}
 
 </body>
 {% block scripts %}
