@@ -47,7 +47,6 @@ class SendComment(Resource):
         else:
             data = dict(request.form)
             headers = {'x-functions-key': app.config['DB_API_KEY_COMMENTS']}
-            adress = app.config['RECORD_COMMENT']
             response = post(app.config['RECORD_COMMENT'],
                            headers=headers,
                            json=data)
